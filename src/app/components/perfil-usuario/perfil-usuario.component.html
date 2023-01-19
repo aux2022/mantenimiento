@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <nav class=" navbar p-d-flex " style="  z-index: 1;">
+        <p-button type="button" (click)="visibleSidebar1 = true" icon="pi pi-th-large"></p-button>
+        <a class="navbar-brand" href="#"><img
+                src="https://www.bioflex.mx/wp-content/uploads/2020/07/logo_bioflex-01.png" style="height: 30px;"
+                alt=""></a>
+
+
+    </nav>
+    <p-breadcrumb [model]="items"></p-breadcrumb>
+
+
+    <p-toolbar>
+        <div class="p-toolbar-group-left">
+            <input type="search" class="form-control" aria-label="Default" placeholder="Buscar..." aria-describedby="inputGroup-sizing-default"  [(ngModel)]="searchText">
+            
+         
+                <select class="form-select m-3" id="inputGroupSelect01" [(ngModel)]="searchTextMa">
+                  <option value="" selected disabled>Máquina</option>
+                  <option *ngFor="let item of maqunasAreas" value="{{item.nombre}}">{{item.nombre}}</option>
+                 
+          
+                </select>
+                <select class="form-select m-3" id="inputGroupSelect01" [(ngModel)]="searchTextDo">
+                    <option value="" selected disabled>Dispositivo</option>
+                    <option *ngFor="let item of dispositivos|filter:searchTextMa" value="{{item.nombre}}">{{item.nombre}}</option>
+                   
+            
+                  </select>
+                  <i class="p-toolbar-separator pi pi-bars mr-2" style="vertical-align: middle"></i>
+                  <p-button (click)="clearFiltres()" icon="pi pi-filter-slash"></p-button>
+            <!-- <p-button label="New" icon="pi pi-plus" class="mr-2"></p-button>
+            <p-button label="Upload" icon="pi pi-upload" styleClass="p-button-success"></p-button> -->
+                
+           
+            
+        </div>
+        
+        
+    </p-toolbar>
+    <div class="card">
+
+        <p-tabView>
+            <p-tabPanel  header="En Proceso">
+                
+                <section class="cards-section text-center" *ngFor="let item of datatable|filter:searchText|filter:searchTextDo|filter:searchTextMa">
+
+                    <div class="container">
+
+
+
+                        <div class="card text-center border-dark text-bg-light">
+
+
+
+
+
+                            <div class="card-header ">
+                                <div
+                                    *ngIf="item.nomina2 ===0 && item.nomina!=='Pendiente por asignar' then thenBlock10 else elseBlock10">
+                                </div>
+                                <ng-template #thenBlock10>
+                                    <span class="badge btn-success"
+                                        style="background-color: rgb(53, 153, 50);">M1/{{item.nombre}}</span>
+
+                                </ng-template>
+
+                                <ng-template #elseBlock10>
+                                    <span class="badge btn-success"
+                                        style="background-color: rgb(53, 153, 50);">M1/{{item.nombre}}</span> /
+                                    <span class="badge btn-danger"
+                                        style="background-color: rgb(219, 64, 64);">M2/{{item.nombre2}}</span>
+                                </ng-template>
+                                {{item.maquina}}-\-{{item.dispositivo}}
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">{{item.area}}</h5>
+                                <h6 class="card-title">Solicitado por: {{item.nombreSolicitante}}</h6>
+                                <p class="card-text">{{item.descripcionProblema}}</p>
+                                <div *ngIf="item.estatusActividad==='Terminado' then thenBlock11 else elseBlock11">
+                                </div>
+
+                                <ng-template #thenBlock11>
+                                    <button type="button" class="btn btn-warning" (click)="onSetDataDO(item);  "
+                                        disabled>
+                                        Diagnosticar <span class="badge "
+                                            style="background-color: none; color: green;"><i
+                                                class="fas fa-check-circle"></i></span>
+                                    </button>&nbsp;&nbsp;
+                                    <button type="button" class="btn btn-warning" (click)="onSetDataTS(item);" disabled>
+                                        Tareas Ejecutadas <span class="badge "
+                                            style="background-color: none; color: green;"><i
+                                                class="fas fa-check-circle"></i></span>
+                                    </button>&nbsp;&nbsp;
+                                    <button type="button" class="btn btn-warning" (click)="onSetDataMO(item);  "
+                                        disabled>
+                                        Material Utilizado <span class="badge "
+                                            style="background-color: none; color: green;"><i
+                                                class="fas fa-check-circle"></i></span>
+                                    </button>&nbsp;&nbsp;
+                                </ng-template>
+
+                                <ng-template #elseBlock11>
+                                    <div
+                                        *ngIf="item.diagnostico!=='' || item.tipoFalla!==''; then thenBlock7 else thenBlock7N">
+                                    </div>
+                                    <ng-template #thenBlock7>
+                                        <button type="button" class="btn btn-warning" (click)="onSetDataDO(item); ">
+                                            Diagnosticar <span class="badge "
+                                                style="background-color: none; color: green;"><i
+                                                    class="fas fa-check-circle"></i></span>
+                                        </button>&nbsp;&nbsp;
+                                    </ng-template>
+
+                                    <ng-template #thenBlock7N>
+                                        <button class="btn btn-warning"
+                                            (click)="onSetDataDO(item);  ">Diagnosticar</button>&nbsp;&nbsp;
+                                    </ng-template>
+                                    <div
+                                        *ngIf="item.tareasEjecutadas !=='' || item.generoParo !=='' ; then thenBlock8 else thenBlock8b">
+                                    </div>
+                                    <ng-template #thenBlock8>
+                                        <button type="button" class="btn btn-warning" (click)="onSetDataTS(item);  ">
+                                            Tareas Ejecutadas <span class="badge "
+                                                style="background-color: none; color: green;"><i
+                                                    class="fas fa-check-circle"></i></span>
+                                        </button>&nbsp;&nbsp;
+                                    </ng-template>
+
+                                    <ng-template #thenBlock8b>
+                                        <button class="btn btn-warning" (click)="onSetDataTS(item);  ">Tareas
+                                            Ejecutadas</button>&nbsp;&nbsp;
+                                    </ng-template>
+                                    <div
+                                        *ngIf="item.refaMateHerra!=='' || item.grasaUtilizada !=='' then thenBlock9 else thenBlock9b">
+                                    </div>
+                                    <ng-template #thenBlock9>
+                                        <button type="button" class="btn btn-warning" (click)="onSetDataMO(item); ">
+                                            Material Utilizado <span class="badge "
+                                                style="background-color: none; color: green;"><i
+                                                    class="fas fa-check-circle"></i></span>
+                                        </button>&nbsp;&nbsp;
+                                    </ng-template>
+
+                                    <ng-template #thenBlock9b>
+                                        <button class="btn btn-warning" (click)="onSetDataMO(item);  ">Material
+                                            Utilizado</button>&nbsp;&nbsp;
+                                    </ng-template>
+                                </ng-template>
+                                <button class="btn btn-success" (click)="onSetDataEs(item);  ">Estatus</button>
+                            </div>
+                            <div class="card-footer text-muted">
+                                Número: <b style="color: red;">{{item.idSolicitud}}</b> /
+                                {{item.fechaSolicitud}}
+                            </div>
+                        </div>
+
+                    </div>
+                    <br>
+                </section>
+
+
+            </p-tabPanel>
+
+            <p-tabPanel header="(Trabajos Temporales)">
+
+                <section class="cards-section text-center" *ngFor="let item of datatableCierreTemp|filter:searchText|filter:searchTextDo|filter:searchTextMa">
+                    <div class="container">
+                        <div class="card text-center border-dark text-bg-light">
+                            <div class="card-header ">
+                                <div
+                                    *ngIf="item.nomina2 ===0 && item.nomina!=='Pendiente por asignar' then thenBlock101 else elseBlock101">
+                                </div>
+                                <ng-template #thenBlock101>
+                                    <span class="badge btn-success"
+                                        style="background-color: rgb(53, 153, 50);">M1/{{item.nombre}}</span>
+
+                                </ng-template>
+
+                                <ng-template #elseBlock101>
+                                    <span class="badge btn-success"
+                                        style="background-color: rgb(53, 153, 50);">M1/{{item.nombre}}</span> /
+                                    <span class="badge btn-danger"
+                                        style="background-color: rgb(219, 64, 64);">M2/{{item.nombre2}}</span>
+                                </ng-template>
+                                {{item.maquina}}-\-{{item.dispositivo}}
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">{{item.area}}</h5>
+                                <h6 class="card-title">Solicitado por: {{item.nombreSolicitante}}</h6>
+                                <p class="card-text">{{item.descripcionProblema}}</p>
+                            </div>
+                            <div class="card-footer text-muted">
+                                Número: <b style="color: red;">{{item.idSolicitud}}</b> /
+                                {{item.fechaSolicitud}}
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--//container-->
+                    <br>
+                </section>
+                <!--//cards-section-->
+
+            </p-tabPanel>
+
+            <p-tabPanel header="Cerradas">
+                <section class="cards-section text-center" *ngFor="let item of datatableCierre|filter:searchText|filter:searchTextDo|filter:searchTextMa">
+                    <div class="container">
+                        <div class="card text-center border-dark text-bg-light">
+                            <div class="card-header ">
+                                <div
+                                    *ngIf="item.nomina2 ===0 && item.nomina!=='Pendiente por asignar' then thenBlock101 else elseBlock101">
+                                </div>
+                                <ng-template #thenBlock101>
+                                    <span class="badge btn-success"
+                                        style="background-color: rgb(53, 153, 50);">M1/{{item.nombre}}</span>
+
+                                </ng-template>
+
+                                <ng-template #elseBlock101>
+                                    <span class="badge btn-success"
+                                        style="background-color: rgb(53, 153, 50);">M1/{{item.nombre}}</span> /
+                                    <span class="badge btn-danger"
+                                        style="background-color: rgb(219, 64, 64);">M2/{{item.nombre2}}</span>
+                                </ng-template>
+                                {{item.maquina}}-\-{{item.dispositivo}}
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">{{item.area}}</h5>
+                                <h6 class="card-title">Solicitado por: {{item.nombreSolicitante}}</h6>
+                                <p class="card-text">{{item.descripcionProblema}}</p>
+                            </div>
+                            <div class="card-footer text-muted">
+                                Número: <b style="color: red;">{{item.idSolicitud}}</b> /
+                                {{item.fechaSolicitud}}
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--//container-->
+                    <br>
+                </section>
+                <!--//cards-section-->
+            </p-tabPanel>
+        </p-tabView>
+    </div>
+
+    <p-sidebar [(visible)]="visibleSidebar1" [baseZIndex]="10000">
+        <h1 style="">BFX-M</h1>
+        
+        <hr>
+
+        <p-menu [model]="itemsMenu"></p-menu>
+
+    </p-sidebar>
+
+    <!--modal de diagnostico-->
+    <p-dialog header="Diagnosticar" [(visible)]="displayMaximizableDiagnostico" [modal]="true" [style]="{width: '50vw'}"
+        [maximizable]="true" [draggable]="false" [resizable]="false">
+        <div class="h6 text-muted text-center pt-2" *ngFor="let datatable"><i
+                class="fa-solid fa-triangle-exclamation triangle"></i>Reasignar la solicitud. <b
+                style="color: red;">{{datatable.idSolicitud}}</b></div>
+
+        <form ngNativeValidate class="rounded mb-0 m-4 p-4 needs-validation novalidate"
+            (ngSubmit)="onSetData(serviceModel); onUpdateSalida(serviceModel); ">
+
+            <label for="basic-url" class="form-label"><b>Descripción del Diagnóstico:</b></label>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><i class="fas fa-pen-nib"></i></span>
+                <textarea type="text" class="form-control" placeholder="Diagnóstico (descripción)" name="descDiag"
+                    id="txtdesDiag" [(ngModel)]="serviceModel.diagnostico" required></textarea>
+            </div>
+            <hr>
+            <br>
+            <form [formGroup]="form">
+                <label for="basic-url" class="form-label"><b>Tipo de Falla: </b></label>
+                <div class="form-check" formArrayName="orders"
+                    *ngFor="let order of ordersFormArray.controls; let i = index">
+
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" [formControlName]="i"
+                        required>{{ordersData[i].name}}
+                    <label class="form-check-label">
+
+                    </label>
+                </div>
+
+            </form>
+            <br>
+
+            <br>
+            <div class="d-grid gap-2">
+
+                <button type="submit" class="btnenvia btn btn-primary btn.lg">
+
+                    Enviar Diagnóstico
+                </button>
+            </div>
+        </form>
+
+    </p-dialog>
+    <!--modal de diagnostico-->
+
+    <!--modal de Tareas ejecutadas-->
+    <p-dialog header="Tareas Ejecutadas" [(visible)]="displayMaximizableTaEj" [modal]="true" [style]="{width: '50vw'}"
+        [maximizable]="true" [draggable]="false" [resizable]="false">
+        <div class="h6 text-muted text-center pt-2" *ngFor="let  datatable"><i
+                class="fa-solid fa-triangle-exclamation triangle"></i>Reasignar la solicitud. <b
+                style="color: red;">{{datatable.idSolicitud}}</b></div>
+
+        <form ngNativeValidate class="rounded mb-0 m-4 p-4 needs-validation novalidate "
+            (ngSubmit)="onUpdateSalida3(serviceModel); ">
+            <label for="basic-url" class="form-label"><b>Descripción de las Tareas:</b></label>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><i class="fas fa-pen-nib"></i></span>
+                <textarea type="text" class="form-control" placeholder="Tareas (descripción)" id="dc" name="dc"
+                    [(ngModel)]="serviceModel.tareasEjecutadas" required></textarea>
+            </div>
+            <hr>
+            <label for="basic-url" class="form-label"><b>¿Genero Paro de Máquina?</b></label>
+
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault12">
+                <label class="form-check-label" for="flexRadioDefault12">
+                    Si
+
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault22" checked>
+                <label class="form-check-label" for="flexRadioDefault22">
+                    No
+                </label>
+            </div>
+
+            <hr>
+            <label for="basic-url" class="form-label"><b>Tiempos:</b></label><br>
+            <label for="basic-url" class="form-label">Tiempo de Paro Correctivo:</label>
+
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><i class="fas fa-stopwatch"></i></span>
+                <input type="text" class="form-control" placeholder="Paro correctivo (minutos)" id="pc" name="pc"
+                    [(ngModel)]="serviceModel.paroCorrectivo" required>
+            </div>
+
+            <label for="basic-url" class="form-label">Tiempo de Paro Operativo:</label>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><i class="fas fa-stopwatch"></i></span>
+                <input type="text" class="form-control" placeholder="Paro operativo (minutos)" id="pp" name="pp"
+                    [(ngModel)]="serviceModel.paroOperativo" required>
+            </div>
+
+            <label for="basic-url" class="form-label">Tiempo de Paro por Refacción:</label>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><i class="fas fa-stopwatch"></i></span>
+                <input type="text" class="form-control" placeholder="Paro por refacción (minutos)" id="pr" name="pr"
+                    [(ngModel)]="serviceModel.paroRefaccion" required>
+            </div>
+
+            <div class="d-grid gap-2">
+                <button type="submit" class="btnenvia btn btn-primary btn.lg">
+                    <i class="fa-solid fa-list-check"></i>
+                    Guardar
+                </button>
+            </div>
+        </form>
+    </p-dialog>
+    <!--modal de Tareas ejecutadas-->
+
+
+    <!--modal de material utilizado-->
+    <p-dialog header="Material Utilizado" [(visible)]="displayMaximizableMaUt" [modal]="true" [style]="{width: '50vw'}"
+        [maximizable]="true" [draggable]="false" [resizable]="false">
+        <div class="h6 text-muted text-center pt-2" *ngFor="let  datatable"><i
+                class="fa-solid fa-triangle-exclamation triangle"></i>Reasignar la solicitud. <b
+                style="color: red;">{{datatable.idSolicitud}}</b></div>
+
+        <form ngNativeValidate class="rounded mb-0 m-4 p-4 needs-validation novalidate "
+            (ngSubmit)="onSetData(serviceModel);   onUpdateRegistroMaterial(serviceModel);">
+            <label for="basic-url" class="form-label"><b>Herramienta Utilizada:</b></label>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><i class="fas fa-pen-nib"></i></span>
+                <textarea type="text" class="form-control" placeholder="Describe la herramienta" id="dc" name="dc"
+                    [(ngModel)]="serviceModel.refaMateHerra" required></textarea>
+            </div>
+
+            <hr>
+            <label for="basic-url" class="form-label"><b>Grasa Utilizada:</b></label><br>
+            <form [formGroup]="formtools">
+
+                <div class="form-check" formArrayName="tools"
+                    *ngFor="let tool of toolsFormArray.controls; let e = index">
+
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1"
+                        [formControlName]="e">{{toolsData[e].name1}}
+                    <label class="form-check-label">
+
+                    </label>
+                </div>
+
+            </form>
+            <div class="d-grid gap-2" style="margin-top: 0.5cm;">
+                <button type="submit" class="btnenvia btn btn-primary btn.lg">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    Guardar
+                </button>
+
+            </div>
+
+        </form>
+
+    </p-dialog>
+    <!--modal de material utilizado-->
+
+    <!--modal de Estatus-->
+    <p-dialog header="Estatus Final Solicitud" [(visible)]="displayMaximizableEstatus" [modal]="true"
+        [style]="{width: '50vw'}" [maximizable]="true" [draggable]="false" [resizable]="false">
+        <div class="h6 text-muted text-center pt-2" *ngFor="let  datatable"><i
+                class="fa-solid fa-triangle-exclamation triangle"></i>Reasignar la solicitud. <b
+                style="color: red;">{{datatable.idSolicitud}}</b></div>
+
+        <form ngNativeValidate (ngSubmit)="onSetData(serviceModel); onUpdateRevision(serviceModel); "
+            class="rounded mb-0 m-4 p-4 needs-validation novalidate">
+
+            <label for="basic-url" class="form-label"><b>¿Trabajo Sanitizado?</b></label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                <label class="form-check-label" for="flexRadioDefault1">
+                    Si
+
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                <label class="form-check-label" for="flexRadioDefault2">
+                    No
+                </label>
+            </div>
+            <hr>
+            <label for="basic-url" class="form-label"><b>Estatus:</b></label>
+            <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="servicio"
+                id="first-select" [(ngModel)]="serviceModel.estatusActividad" required>
+                <option value='' disabled>Seleccione....</option>
+                <option for value="Falta de refacción(Trabajo Temporal)">Falta de Refacción(Trabajo Temporal)</option>
+                <option value="Recoger herramientas y refacciones">Recogiendo Herramientas y Refacciones</option>
+                <option value="Cancelado">Cancelado</option>
+                <option value="Terminado">Terminado</option>
+            </select>
+            <br>
+            <div class="d-grid gap-2">
+                <button type="submit" class="btnenvia btn btn-primary btn.lg">
+
+                    Enviar Diagnóstico
+                </button>
+
+            </div>
+        </form>
+    </p-dialog>
+    <!--modal de Estatus-->
+
+</body>
+<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>
+</html>

@@ -1,0 +1,24 @@
+.content {
+    margin-left: 64px;
+    transition: 0.3s;
+  }
+  .content.sidebarExpanded {
+    margin-left: 158px;
+  }
+  
+  nav{
+    
+   
+    background-color: rgb(255, 194, 28);/*navega*/
+  position: fixed;
+  
+    width: 100%;
+    
+  }
+  .hr1 {
+  
+  background-color:  rgb(255, 194, 28);
+  height: 5px;
+  border:none;
+  
+  }

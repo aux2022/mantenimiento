@@ -1,0 +1,42 @@
+
+nav{
+    background-color: rgb(255, 194, 28);
+    
+   
+    width: 100%;
+    -webkit-box-shadow: 0 8px 6px -6px black;
+    -moz-box-shadow: 0 8px 6px -6px black;
+         box-shadow: 0 8px 6px -6px black;
+    
+  }
+  .hr1 {
+  
+  background-color:  rgb(255, 194, 28);
+  height: 5px;
+  border:none;
+  
+  }
+  .p-toast {
+    position: fixed;
+    width: 1rem;
+}
+
+  button {
+    min-width: 10rem;
+    margin-right: 0.5rem;
+}
+@media screen and (max-width: 960px) {
+    button {
+        width: 100%;
+        margin-bottom: 0.5rem;
+   }
+}
+:host ::ng-deep .p-toast-message-custom {
+    background-color: #e1cfe7;
+    border: solid #8a427a;
+    border-width: 0 0 0 6px;
+    color: #2c1e30;
+}
+:host ::ng-deep .p-toast-message-custom .p-toast-icon-close {
+    color: #2c1e30;
+}

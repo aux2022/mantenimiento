@@ -1,0 +1,118 @@
+<app-sidebar [isExpanded]="sidebarExpanded" (toggleSidebar)="sidebarExpanded = !sidebarExpanded"></app-sidebar>
+<div class="content" [ngClass]="{ 'sidebarExpanded': sidebarExpanded }">
+    <!-- <router-outlet></router-outlet> -->
+    
+    <nav class=" navbar p-d-flex " style="  z-index: 100;" >
+        <a class="navbar-brand" href="#"  ><img src="https://www.bioflex.mx/wp-content/uploads/2020/07/logo_bioflex-01.png" style="height: 30px;" alt=""></a>
+      
+    
+    </nav>  
+    <!-- <p-menubar [model]="items"></p-menubar> -->
+<!--tablas-->
+
+<br><br>
+<div class="card">
+    <div class="card-container ">
+        <div class="block font-bold  p-4 border-round mb-3">
+            <form ngNativeValidate (ngSubmit)="onAddSolicitudDispositivo(serviceModelDispositivo)">
+                <h6>Dispositivo</h6>
+                <div class="row g-3">
+                  <div class="col-sm-3">
+                    <input type="text" class="form-control" placeholder="Nombre" aria-label="nombre" name="nombreDispositivo"
+                      id="txtNombreDispositivo" [(ngModel)]="serviceModelDispositivo.nombre" required>
+                  </div>
+                  <div class="col-sm">
+                    <select class="form-select" id="txtAreaDispositivo" [(ngModel)]="searchTextAr" name="areaDispositivo"
+                      [(ngModel)]="serviceModelDispositivo.area" required>
+                      <option value="" selected>Seleccione el Área...</option>
+                      <option *ngFor="let item of datatableAr" value="{{item.nombre}}">{{item.nombre}}</option>
+                    </select>
+                  </div>
+                  <div class="col-sm">
+                    <select class="form-select" id="txtMaquinaDispositivo" name="maquinaDispositivo"
+                      [(ngModel)]="searchTextMaq" [(ngModel)]="serviceModelDispositivo.maquina" required>
+                      <option value="" selected>Seleccione la Máquina...</option>
+                      <option *ngFor="let item of datatable3|filter:searchTextAr" value="{{item.nombre}}">{{item.nombre}}
+                      </option>
+                    </select>
+                  </div>
+      
+                  <div class="col-sm">
+                    <button class="btn btn-danger" type="submit">Agregar</button>
+                  </div>
+                </div>
+                <hr>
+              </form>
+
+        </div>
+        <div class="block  p-4 border-round mb-3">
+             <!--inicia tabla-->
+    
+    <p-table #dt1  [value]="datatableDispos" dataKey="id" class="table-hover table0"  [(selection)]="selectedProduct1"  dataKey="code"  [rows]="5" [showCurrentPageReport]="true" [resizableColumns]="true"   [scrollable]="true" scrollHeight="350px"  styleClass="p-datatable-gridlines"  [tableStyle]="{'min-width': '5rem'}"
+    [rowsPerPageOptions]="[10,5,50,100]" [loading]="loading" styleClass="p-datatable-customers p-datatable-gridlines "
+    [paginator]="true" currentPageReportTemplate=""
+    [globalFilterFields]="['idSolicitud','area','nombreSolicitante','maquina','dispositivo','descripcionProblema','nomina','nombre','diagnostico','tipoFalla','tiempoTotal','nombre3']">
+    
+    
+    
+    <ng-template pTemplate="header" >
+        <tr  style="font-size:15px ;" >
+           
+    
+            <th    style="width: 12px;" >
+                <div class="p-d-flex p-jc-between p-ai-center" >
+                    Nombre Del Dispositivo
+                    <p-columnFilter type="text" field="nombre" display="menu"></p-columnFilter>
+                </div>
+            </th>
+
+            <th    style="width: 12px;" >
+                <div class="p-d-flex p-jc-between p-ai-center" >
+                    Área
+                    <p-columnFilter type="text" field="area" display="menu"></p-columnFilter>
+                </div>
+            </th>
+
+            <th    style="width: 12px;" >
+                <div class="p-d-flex p-jc-between p-ai-center" >
+                    Máquina
+                    <p-columnFilter type="text" field="maquina" display="menu"></p-columnFilter>
+                </div>
+            </th>
+    
+            <th  style="width: 12px;">
+                <div class="p-d-flex p-jc-between p-ai-center" class="text-center">
+                    <i class="fas fa-cogs" style="color: blue;"></i>
+                </div>
+            </th>
+        </tr>
+    </ng-template>
+    
+    <ng-template pTemplate="body" let-datatableDispos >
+        <tr style="font-size:14px; " [pSelectableRow]="datatableDispos">
+        <td   style="width: 12px;" >  {{datatableDispos.nombre}}  </td>
+        <td   style="width: 12px;">  {{datatableDispos.area}}  </td>
+        <td   style="width: 12px;">  {{datatableDispos.maquina}}  </td>
+        <td   style="width: 12px;"  class="text-center">  <button type="button" (click)="deleteDispositivos(datatableDispos.idDispositivo)" class="btn btn-danger" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
+            <i class="fas fa-trash"></i>
+           </button> </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td  class="text-center" colspan="7">No se encontraron registros!!!.<img src="/assets/img/ops.png" alt="" style="width:500px ;"></td>
+    
+        </tr>
+    </ng-template>
+    </p-table>
+    <!--termina tabla-->
+        </div>
+        
+    </div>
+</div>
+
+
+<br>
+
+
+  </div>

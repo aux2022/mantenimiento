@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+    <nav class=" navbar p-d-flex " style="  z-index: 15;" >
+		<p-button type="button" (click)="visibleSidebar1 = true" icon="pi pi-th-large"></p-button>
+		<a class="navbar-brand" href="#"  ><img src="https://www.bioflex.mx/wp-content/uploads/2020/07/logo_bioflex-01.png" style="height: 30px;" alt=""></a>
+
+
+	</nav>
+
+<p-breadcrumb [model]="items"   ></p-breadcrumb>
+
+
+<div class="p-grid">
+
+
+
+    <div class="container io">
+
+        <div class="abs-center">
+
+    <div  class="io" style="max-width: auto;">
+
+        <div class="row g-0">
+
+          <div class="">
+            <div class="card-body">
+              <form ngNativeValidate (ngSubmit)="onAddSolicitud(serviceModel)" class="row g-3">
+
+                <div  class="col-md-6"  style="margin-top: .9cm;">
+                  <label class="visually-hidden" for="autoSizingInputGroup"></label>
+                  <div class="input-group">
+                    <div class="input-group-text" style="box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;"><i class="fas fa-signature"></i></div>
+                    <input type="text" class="form-control form-control-sm"  id="autoSizingInputGroup" placeholder="Nombre del solicitante" name="nombreSolicitante" id="txtnombes"  pTooltip="Ingresa tú nombre" [(ngModel)]="serviceModel.nombreSolicitante" style="box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" required>
+
+                  </div>
+                </div>
+
+
+
+          <div class="col-md-6" style="margin-top: .9cm;">
+            <div class="input-group input-group-sm mb-3">
+              <span class="input-group-text " id="inputGroup-sizing-sm"  style="box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;"><i class="fas fa-map-marker-alt"></i></span>
+
+            <select  style="box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;" class="form-select" name="area" id="textarea"   [(ngModel)]="searchText" [(ngModel)]="serviceModel.area" required
+    >
+              <option selected value='' disabled>Seleccionar el Área....</option>
+              <option *ngFor="let item of areas" value="{{item.nombre}}">{{item.nombre}}</option>
+
+            </select>
+          </div>
+         </div>
+
+          <div  class="col-md-6">
+            <div class="input-group input-group-sm mb-3">
+
+              <span class="input-group-text" id="inputGroup-sizing-sm"  style="box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;"><i class="fas fa-cogs"></i></span>
+
+        <select  class="form-select" name="maquina" id="txtMaquina"  style="box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;"
+        [(ngModel)]="searchTextDisp" [(ngModel)]="serviceModel.maquina" required >
+          <option selected value='' disabled>Seleccionar la Máquina....</option>
+          <option *ngFor="let item of maqunasAreas|filter:searchText" value="{{item.nombre}}">{{item.nombre}}</option>
+              </select>
+            </div>
+          </div>
+
+
+                <div  class="col-md-6">
+                  <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text"  style="box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;"><i class="fas fa-microchip"></i></span>
+                    <select  style="box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;" class="form-select " name="dispositivo" id="txtDispo" placeholder="Dispositivo"
+    [(ngModel)]="serviceModel.dispositivo" required
+    >
+    <option selected value='' disabled>Seleccionar la Dispositivo....</option>
+          <option *ngFor="let item of dispositivos|filter:searchTextDisp" value="{{item.nombre}}">{{item.nombre}}</option>
+    </select>
+                  </div>
+                </div>
+
+                <div  class="col-12">
+                  <label class="visually-hidden" for="autoSizingInputGroup"></label>
+                  <div class="input-group ">
+                    <div class="input-group-text"  style="box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;"><i class="fas fa-pen-nib"></i></div>
+                    <textarea pTooltip="Describe detalladamente el problema" tooltipPosition="bottom" style="box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;" type="text" class="form-control form-control-sm" id="autoSizingInputGroup" placeholder="Descripción del problema"  name="descripcionProblema" id="txtDescP"  [(ngModel)]="serviceModel.descripcionProblema"
+                    required></textarea>
+                  </div>
+                </div>
+
+                <!-- <button type="submit" class="btnenvia btn btn-success btn.lg" pButton pRipple  label="Solicitar" class="p-button-success"><i class="fas fa-paper-plane"></i></button> -->
+
+                <button style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;"
+                type="submit" pTooltip="Realizar la solicitud" tooltipPosition="bottom"
+                class="btnenvia btn btn-success btn.lg"
+
+              >
+                <i class="fas fa-paper-plane"></i>
+                Solicitar
+              </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+        </div>
+      </div>
+
+
+</div>
+
+
+
+  <p-sidebar [(visible)]="visibleSidebar1" [baseZIndex]="10000">
+    <h1 style="font-weight:normal">BFX-M</h1>
+    <hr>
+
+
+
+    <p-button  label="Mostrar Solicitudes" (click)="visibleSidebar1 = false" icon="fas fa-columns" iconPos="right" styleClass="p-button-info" routerLink="/Vista_Solicitudes_Principal"></p-button>
+</p-sidebar>
+
+
+
+
+
+
+
+</body>
+</html>
+

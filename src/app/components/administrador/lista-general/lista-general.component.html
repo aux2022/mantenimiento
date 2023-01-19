@@ -1,0 +1,202 @@
+<app-sidebar [isExpanded]="sidebarExpanded" (toggleSidebar)="sidebarExpanded = !sidebarExpanded"></app-sidebar>
+<div class="content" [ngClass]="{ 'sidebarExpanded': sidebarExpanded }">
+    <!-- <router-outlet></router-outlet> -->
+
+    <nav class=" navbar p-d-flex " style="  z-index: 100;" >
+        <a class="navbar-brand" href="#"  ><img src="https://www.bioflex.mx/wp-content/uploads/2020/07/logo_bioflex-01.png" style="height: 30px;" alt=""></a>
+
+
+    </nav>
+    <!-- <p-menubar [model]="items"></p-menubar> -->
+<!--tablas-->
+
+<br><br><br>
+
+<div class="card">
+    <div class="card-container ">
+        <div class="block font-bold text-center p-4 border-round mb-3">
+            <p-toolbar>
+
+                <div class="p-toolbar-group-left">
+                    <p-button label="Mostrar Datos Completos" icon="pi pi-book" styleClass="p-button-success" pTooltip="La carga puede demorar" routerLink="/solicitudesView"></p-button>
+
+
+
+                </div>
+
+
+            </p-toolbar>
+
+            <p-table #dt1  [value]="datatable" dataKey="id" selectionMode="single"   [(selection)]="selectedProduct1" dataKey="code"  [rows]="10" [showCurrentPageReport]="true" [scrollable]="true" scrollHeight="400px" [resizableColumns]="true" styleClass="p-datatable-gridlines"  [tableStyle]="{'min-width': '30rem'}"
+            [rowsPerPageOptions]="[10,5,50,100]" [loading]="loading" styleClass="p-datatable-customers p-datatable-gridlines "
+            [paginator]="true" currentPageReportTemplate=""
+            [globalFilterFields]="['idSolicitud','descripcionProblema','fechaInicio','fechaFinal','tiempoTotal','area']">
+
+
+
+            <ng-template pTemplate="header">
+                <tr  style="font-size:12px ;" class="text-center">
+                    <th pResizableColumn pFrozenColumn>
+                        <div class="p-d-flex p-jc-between p-ai-center">
+                            <b>Id</b>
+                            <p-columnFilter type="text" field="idSolicitud" display="menu"></p-columnFilter>
+                        </div>
+                    </th>
+
+                    <th pResizableColumn>
+                        <div class="p-d-flex p-jc-between p-ai-center">
+                            Descripcion Del Problema
+                            <p-columnFilter type="text" field="descripcionProblema" display="menu"></p-columnFilter>
+                        </div>
+                    </th>
+
+
+
+
+                    <th pResizableColumn>
+                        <div class="p-d-flex p-jc-between p-ai-center">
+                            Fecha de inicio
+                            <p-columnFilter type="date" field="fechaInicio" display="menu"></p-columnFilter>
+                        </div>
+                    </th>
+
+
+                    <th pResizableColumn>
+                        <div class="p-d-flex p-jc-between p-ai-center">
+                            Fecha de cierre
+                            <p-columnFilter type="date" field="fechaFinal" display="menu"></p-columnFilter>
+                        </div>
+                    </th>
+
+                    <th pResizableColumn>
+                        <div class="p-d-flex p-jc-between p-ai-center">
+                            Tiempo total
+                            <p-columnFilter type="text" field="tiempoTotal" display="menu"></p-columnFilter>
+                        </div>
+                    </th>
+
+                    <th pResizableColumn>
+                        <div class="p-d-flex p-jc-between p-ai-center">
+                            Área
+                            <p-columnFilter type="text" field="area" display="menu"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th pResizableColumn>
+                        <div class="p-d-flex p-jc-between p-ai-center">
+                           minutos totales
+                            <p-columnFilter type="text" field="nombre2" display="menu"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th pResizableColumn style="min-width:10rem">
+                        <div class="flex justify-content-center align-items-center">
+                            Estatus
+                            <p-columnFilter field="estatusActividad" matchMode="equals" display="menu">
+                                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                    <p-dropdown [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)" placeholder="Ninguno">
+                                        <ng-template let-option pTemplate="item">
+                                            <span [class]="'customer-badge status-' + option.value">{{option.label}}</span>
+                                        </ng-template>
+                                    </p-dropdown>
+                                </ng-template>
+                            </p-columnFilter>
+                        </div>
+                    </th>
+
+
+                    <!-- <th pResizableColumn>
+                        <div class="p-d-flex p-jc-between p-ai-center">
+
+                        </div>
+                    </th> -->
+
+                    <th pResizableColumn>
+                        <div class="p-d-flex p-jc-between p-ai-center">
+                            Historial Mecánicos
+                        </div>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-datatable  >
+                <tr  style="font-size:12px ;" class="text-center" [pSelectableRow]="datatable">
+
+                        <td pFrozenColumn class="text-center" >
+                          <b>{{datatable.idSolicitud}}</b>
+                        </td>
+                        <td  class="">
+                            <div style='width:10rem; '>{{datatable.descripcionProblema}}</div>
+                        </td>
+
+                        <td  class="text-center">
+                            {{datatable.fechaInicio}}
+                        </td>
+                        <td  class="text-center">
+                            {{datatable.fechaFinal }}
+                        </td>
+                        <td  class="text-center">
+                            {{datatable.tiempoTotal}}
+                        </td>
+                        <td  class="text-center">
+                            {{datatable.area}}
+                        </td>
+                        <td  class="">
+                             min
+                        </td>
+                            <div *ngIf="datatable.estatusActividad ==='Terminado'; then thenBlock else elseBlock"></div>
+                            <ng-template #thenBlock>
+
+                                    <td><h6 style="font-size:12px ;" class="text-center" style="background-color: rgb(121, 250, 121); color: rgb(31, 29, 29);">{{datatable.estatusActividad}}</h6>
+
+                                </td>
+                            </ng-template>
+                            <ng-template #elseBlock>
+                                <div *ngIf="datatable.estatusActividad ==='Cancelado'; then thenBlockC else elseBlockC"></div>
+                                <ng-template #thenBlockC>
+                                    <td><h6 style="font-size:12px ;" class="text-center" style="background-color: rgb(250, 121, 121); color: rgb(31, 29, 29);">{{datatable.estatusActividad}}</h6>
+                                    </td>
+                                </ng-template>
+
+                                <ng-template #elseBlockC>
+                                    <div *ngIf="datatable.estatusActividad ===''; then thenBlockV   else elseBlockV"></div>
+                                    <ng-template #thenBlockV>
+                                        <td><h6 style="font-size:12px ;" class="text-center" style="background-color: rgb(250, 237, 121); color: rgb(31, 29, 29);">Sin estatus</h6>
+                                        </td>
+                                    </ng-template>
+
+                                    <ng-template #elseBlockV>
+                                        <div *ngIf="datatable.estatusActividad ==='Falta de refacción(Trabajo Temporal)'; then thenBlockTT"></div>
+                                        <ng-template #thenBlockTT>
+                                            <td><h6 style="font-size:12px ;" class="text-center" style="background-color: rgb(121, 179, 250); color: rgb(31, 29, 29);">Trabajo temporal</h6>
+                                            </td>
+                                        </ng-template>
+
+
+                                    </ng-template>
+                                </ng-template>
+
+
+
+                            </ng-template>
+
+
+
+                        <td  class="text-center">
+
+                            <button pButton  type="button" icon="fas fa-history" class="p-button-rounded p-button-info" routerLink="/HistorialMC/{{datatable.idSolicitud}}" ></button>
+                        </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="7"  class="text-center">No se encontraron registros!!!.<img src="/assets/img/ops.png" alt="" style="width:500px ;"></td>
+
+                </tr>
+            </ng-template>
+            </p-table>
+
+        </div>
+
+
+
+</div>
+
+

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+
+
+	<nav class=" navbar p-d-flex " style="  z-index: 1;" >
+		<p-button type="button" (click)="visibleSidebar1 = true" icon="pi pi-th-large"></p-button>
+		<a class="navbar-brand" href="#"  ><img src="https://www.bioflex.mx/wp-content/uploads/2020/07/logo_bioflex-01.png" style="height: 30px;" alt=""></a>
+
+
+	</nav>
+
+
+
+<p-breadcrumb [model]="items"   ></p-breadcrumb>
+<div class="p-grid"><!--1.inicia-->
+
+
+    <div class="p-mb-3">
+        <p-button type="button" icon="pi pi-chevron-left" (click)="prev()" [disabled]="isFirstPage()" styleClass="p-button-text"></p-button>
+        <p-button type="button" icon="pi pi-refresh" (click)="reset()" styleClass="p-button-text"></p-button>
+        <p-button type="button" icon="pi pi-chevron-right" (click)="next()" [disabled]="isLastPage()" styleClass="p-button-text"></p-button>
+    </div>
+
+	<p-table #dt1  [value]="datatable" dataKey="id" class="table-hover"  [(selection)]="selectedProduct1"  dataKey="code"  [rows]="10" [showCurrentPageReport]="true"  [(first)]="first" [scrollable]="true" scrollHeight="500px" [resizableColumns]="true" styleClass="p-datatable-gridlines"  [tableStyle]="{'min-width': '10rem'}"
+				[rowsPerPageOptions]="[10,5,50,100]" [loading]="loading" styleClass="p-datatable-customers p-datatable-gridlines "
+				[paginator]="true" currentPageReportTemplate=""
+				[globalFilterFields]="['idSolicitud','area','nombreSolicitante','maquina','dispositivo','descripcionProblema','nomina','nombre','diagnostico','tipoFalla','tiempoTotal','nombre3']">
+
+				 <ng-template pTemplate="caption">
+
+
+
+
+
+					  <form class="row g-3">
+
+						<div class="col-auto">
+
+							<div class="form-outline">
+								<input type="search" id="form1" class="form-control" placeholder="Buscar en tabla" aria-label="Search"  (input)="dt1.filterGlobal(
+									$any($event.target).value, 'contains')"/>
+							  </div>
+
+
+						</div>
+
+
+
+
+
+					  </form>
+
+				</ng-template>
+
+				<ng-template pTemplate="header">
+					<tr  style="font-size:12px ;" class="text-center">
+						<th pResizableColumn pFrozenColumn  class="text-center">
+							<div class="p-d-flex p-jc-between p-ai-center">
+								<b>Id</b>
+								<p-columnFilter type="text" field="idSolicitud" display="menu"></p-columnFilter>
+							</div>
+						</th>
+
+						<th pResizableColumn   class="text-center">
+							<div class="p-d-flex p-jc-between p-ai-center" >
+								Nombre Solicitante
+								<p-columnFilter type="text" field="nombreSolicitante" display="menu"></p-columnFilter>
+							</div>
+						</th>
+
+						<th pResizableColumn  class="text-center">
+							<div class="p-d-flex p-jc-between p-ai-center">
+								Fecha Solicitud
+                                <p-columnFilter type="date" field="fechaSolicitud" display="menu"></p-columnFilter>
+							</div>
+						</th>
+
+
+						<th pResizableColumn>
+							<div class="p-d-flex p-jc-between p-ai-center"  class="text-center">
+								Hora Solicitud
+
+							</div>
+						</th>
+
+
+						<th pResizableColumn>
+							<div class="p-d-flex p-jc-between p-ai-center"  class="text-center">
+								Área
+
+							</div>
+						</th>
+						<th pResizableColumn  class="text-center">
+							<div class="p-d-flex p-jc-between p-ai-center">
+								Máquina
+                                <p-columnFilter type="text" field="maquina" display="menu"></p-columnFilter>
+							</div>
+						</th>
+						<th pResizableColumn  class="text-center">
+							<div class="p-d-flex p-jc-between p-ai-center">
+								Dispositivo
+                                <p-columnFilter type="text" field="dispositivo" display="menu"></p-columnFilter>
+							</div>
+						</th>
+                        <th pResizableColumn  class="text-center">
+							<div class="p-d-flex p-jc-between p-ai-center">
+								Problema
+                                <p-columnFilter type="text" field="descripcionProblema" display="menu"></p-columnFilter>
+							</div>
+						</th>
+                        <th pResizableColumn  class="text-center">
+							<div class="p-d-flex p-jc-between p-ai-center">
+								Nómina Inicial
+                                <p-columnFilter type="text" field="nomina" display="menu"></p-columnFilter>
+							</div>
+						</th>
+                        <th pResizableColumn  class="text-center">
+							<div class="p-d-flex p-jc-between p-ai-center">
+								Nombre Mecánico Inicial
+                                <p-columnFilter type="text" field="nombre" display="menu"></p-columnFilter>
+							</div>
+						</th>
+                        <th pResizableColumn  class="text-center">
+							<div class="p-d-flex p-jc-between p-ai-center">
+								Fecha Inicio
+                                <p-columnFilter type="date" field="fechaInicio" display="menu"></p-columnFilter>
+							</div>
+						</th>
+                        <th pResizableColumn  class="text-center">
+							<div class="p-d-flex p-jc-between p-ai-center">
+								Hora Inicio
+							</div>
+						</th>
+                        <th pResizableColumn  class="text-center">
+							<div class="p-d-flex p-jc-between p-ai-center">
+								Diagnóstico
+                                <p-columnFilter type="text" field="diagnostico" display="menu"></p-columnFilter>
+							</div>
+						</th>
+                        <th pResizableColumn  class="text-center">
+							<div class="p-d-flex p-jc-between p-ai-center">
+								Falla
+                                <p-columnFilter type="text" field="tipoFalla" display="menu" class="ml-auto"></p-columnFilter>
+							</div>
+						</th>
+                        <th pResizableColumn  class="text-center">
+							<div class="p-d-flex p-jc-between p-ai-center">
+								¿Género Paro?
+
+							</div>
+						</th>
+                        <th pResizableColumn  class="text-center">
+							<div class="p-d-flex p-jc-between p-ai-center">
+								Tiempo Total De Paro
+							</div>
+						</th>
+                        <th pResizableColumn  class="text-center">
+							<div class="p-d-flex p-jc-between p-ai-center">
+								Tareas Ejecutadas
+							</div>
+						</th>
+                        <th pResizableColumn  class="text-center">
+							<div class="p-d-flex p-jc-between p-ai-center">
+								Grasas Utilizadas
+							</div>
+						</th>
+                        <th pResizableColumn  class="text-center">
+							<div class="p-d-flex p-jc-between p-ai-center">
+								Material Utilizado
+							</div>
+						</th>
+                        <th pResizableColumn  class="text-center">
+							<div class="p-d-flex p-jc-between p-ai-center">
+								Fecha De Cierre
+							</div>
+						</th>
+                        <th pResizableColumn  class="text-center">
+							<div class="p-d-flex p-jc-between p-ai-center">
+								Hora De Cierre
+							</div>
+						</th>
+                        <th pResizableColumn  class="text-center">
+							<div class="p-d-flex p-jc-between p-ai-center">
+								¿Trabajó Sanitizado?
+							</div>
+						</th>
+                        <th pResizableColumn  class="text-center">
+							<div class="p-d-flex p-jc-between p-ai-center">
+								Estatus
+							</div>
+						</th>
+                        <th pResizableColumn  class="text-center">
+							<div class="p-d-flex p-jc-between p-ai-center">
+								Firmada Por..
+							</div>
+						</th>
+                        <th pResizableColumn  class="text-center">
+							<div class="p-d-flex p-jc-between p-ai-center">
+								Opciones
+							</div>
+						</th>
+					</tr>
+				</ng-template>
+				<ng-template pTemplate="body" let-datatable>
+                    <tr style="font-size:12px ;" class="text-center" [pSelectableRow]="datatable">
+                    <td class="text-center"  pFrozenColumn style="background-color: rgb(255, 249, 222);"><b style="color: rgb(255, 145, 0);">{{datatable.idSolicitud}}</b></td>
+                    <td class="text-center">  {{datatable.nombreSolicitante}}  </td>
+                    <td class="text-center">  {{datatable.fechaSolicitud}}  </td>
+                    <td class="text-center">  {{datatable.horaSolicitud}}  </td>
+                    <td class="text-center">  {{datatable.area}}  </td>
+                    <td class="text-center">  {{datatable.maquina}}  </td>
+                    <td class="text-center">  {{datatable.dispositivo}}  </td>
+                    <td class="text-center" style='width:10rem; overflow:hidden;'><div style='width:10rem; '>{{datatable.descripcionProblema}}</div> </td>
+                    <td class="text-center">  {{datatable.nomina}}  </td>
+                    <td class="text-center">  {{datatable.nombre}}  </td>
+                    <td class="text-center">  {{datatable.fechaInicio}}  </td>
+                    <td class="text-center">  {{datatable.horaInicio}}  </td>
+                    <td class="text-center">  {{datatable.diagnostico}}  </td>
+                    <td class="text-center">  {{datatable.tipoFalla}}  </td>
+                    <td class="text-center">  {{datatable.generoParo}}  </td>
+                    <td class="text-center">  {{datatable.tiempoTotal}}  </td>
+                    <td class="text-center">  {{datatable.tareasEjecutadas}}  </td>
+                    <td class="text-center">  {{datatable.grasaUtilizada}}  </td>
+                    <td class="text-center">  {{datatable.refaMateHerra}}  </td>
+                    <td class="text-center">  {{datatable.fechaFinal}}  </td>
+                    <td class="text-center">  {{datatable.horaFinal}}  </td>
+                    <td class="text-center">  {{datatable.trabajoSanitizado}}  </td>
+                    <td class="text-center">  {{datatable.estatusActividad}}  </td>
+                    <td class="text-center">  {{datatable.nombre3}}  </td>
+					<div *ngIf="datatable.estatusActividad ==='Terminado' || datatable.estatusActividad ==='Falta de refacción(Trabajo Temporal)'; then thenBlock else elseBlock"></div>
+
+					<ng-template #thenBlock>
+
+					 <div *ngIf="datatable.firmaSolicitante==='0'; then thenBlock1 else elseBlock1"></div>
+					 <ng-template #thenBlock1>
+						<td class="text-center"><button pButton pRipple type="button" label="Firmar" class="p-button-info p-button-text" (click)="onSetData(datatable)"></button></td>
+
+					 </ng-template>
+					 <ng-template #elseBlock1>
+						<td class="text-center">
+							<button pButton pRipple type="button" label="Firmada" class="p-button-danger p-button-text" (click)="onSetData(datatable)"  disabled></button>
+
+						</td>
+
+
+					 </ng-template>
+
+
+					 </ng-template>
+
+					<ng-template #elseBlock>
+
+						<td class="text-center"><button pButton pRipple type="button" label="Firmar" class="p-button-info p-button-text" (click)="onSetData(datatable)"  disabled></button></td>
+				   </ng-template>
+
+
+
+                    </tr>
+				</ng-template>
+				<ng-template pTemplate="emptymessage">
+					<tr>
+						<td  class="text-center" colspan="7">No se encontraron registros!!!.<img src="/assets/img/ops.png" alt="" style="width:500px ;"></td>
+
+					</tr>
+				</ng-template>
+				</p-table>
+
+</div><!--1.inicia-->
+
+<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>
+
+
+
+<p-dialog header="Firmar Solicitud" [(visible)]="displayMaximizable" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
+    [draggable]="false" [resizable]="false">
+    <div class="h6 text-muted text-center pt-2"  *ngFor="let  datatable"><i class="fa-solid fa-triangle-exclamation triangle"></i>Tomar la solicitud. <b style="color: red;">{{datatable.idSolicitud}}</b></div>
+
+    <form class="rounded mb-0 m-4 p-4 needs-validation novalidate" >
+
+        <h6 ><i class="fas fa-info-circle"></i> Coloca Tú Número de Nomina Para Continuar</h6>
+        <div class="input-group input-group-sm mb-3">
+          <span class="input-group-text" id="inputGroup-sizing-sm"><i class="fas fa-clipboard"></i> </span>
+          <input type="text" class="form-control" placeholder="Coloque su firma" name="firma" id="txtfirma" [(ngModel)]="serviceModel.firmaSolicitante">
+        </div>
+
+
+    </form>
+      <button class="btn btn-primary"  (click)="onUpdateSalida(serviceModel);  ">Confirmar</button>
+</p-dialog>
+
+ <p-sidebar [(visible)]="visibleSidebar1" [baseZIndex]="10000">
+    <h1 >BFX-M</h1>
+    <hr>
+
+
+<p-menu [model]="itemsMenu"></p-menu>
+
+</p-sidebar>
+</body>
+</html>

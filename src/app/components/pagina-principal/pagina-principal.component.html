@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+<nav class=" navbar " style=" z-index: 1;" >
+    <p-button type="button" (click)="visibleSidebar1 = true" icon="pi pi-th-large"></p-button>
+    <a class="navbar-brand" href="#"  ><img src="https://www.bioflex.mx/wp-content/uploads/2020/07/logo_bioflex-01.png" style="height: 30px;" alt=""></a>
+  
+
+</nav>
+<div class="overlay" *ngIf="!load">
+
+    <div class="spinner ">
+        <img style="width:150px;height:150px;" src="/assets/spin/spinInit.gif"/>
+      </div>
+  
+    </div>
+
+<div class="text-layout" >
+  
+    <div class="area" >
+        <ul class="circles">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+             
+        </ul>
+        
+        <section class="cards-section text-center ">
+            <br><br><br>
+            <div class="container stilo">
+                <div id="cards-wrapper" class="cards-wrapper col-lg-6 col-12 row">
+    
+                  <span style="margin-top: 15px;"></span>
+                        <div class=" item item-green col-lg- col-6"  >
+                            <div class="item-inner" style=" box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+                                <div class="icon-holder">
+                                    <i class="icon fa-3x fas fa-table"></i>
+                                </div><!--//icon-holder-->
+                                <h3 class="title">Solicitudes</h3>
+                                <p class="intro">Mostrar Solicitudes Nuevas y en Proceso.</p>
+                                <a class="link"  routerLink="/Asignar"><span></span></a>
+                            </div><!--//item-inner-->
+                        </div><!--//item-->
+    
+                        <div class=" item item-pink item-2 col-lg-6 col-6">
+                            <div class="item-inner" style=" box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+                                <div class="icon-holder" >
+    
+                                    <span aria-hidden="true" class="icon fas fa-3x fa-users-cog"></span>
+                                </div><!--//icon-holder-->
+                                <h3 class="title">Administrador</h3>
+                                <p class="intro">Administrar Catálogos, Generar Reportes.</p>
+                                <a class="link" href="/Administrador"><span></span></a>
+                            </div><!--//item-inner-->
+                            
+                        </div><!--//item-->
+                        <hr style="width: 830px; color: black; ">
+    
+                    <div class="item item-blue col-lg-6 col-6">
+                        <div class="item-inner" style=" box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+                            <div class="icon-holder" >
+                                <i class="icon fa-3x fas fa-mail-bulk"></i>
+                                <span aria-hidden="true" class="icon icon_datareport_alt"></span>
+                            </div><!--//icon-holder-->
+                            <h3 class="title">Realiza una solicitud</h3>
+                            <p class="intro">Levantar una solicitud para mantenimiento.</p>
+                            <a class="link" routerLink="/Formulario_solicitar"><span></span></a>
+                        </div><!--//item-inner-->
+                    </div><!--//item-->
+    
+    
+                    <div class="item item-orange col-lg-6 col-6">
+                        <div class="item-inner" style=" box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+                            <div class="icon-holder" >
+                                <i class="fas fa-3x fa-user-lock" style="color:#F88C30;"></i>
+                                <span aria-hidden="true" class="icon icon_datareport_alt"></span>
+                            </div><!--//icon-holder-->
+                            <h3 class="title">Supervisor/área</h3>
+                            <p class="intro">Firmar solicitudes terminadas.</p>
+                            <a class="link" routerLink="/login_Supervisor"><span></span></a>
+                        </div><!--//item-inner-->
+                    </div><!--//item-->
+    
+    
+                </div><!--//cards-->
+            </div><!--//container-->
+          
+        </section><!--//cards-section-->
+        
+    </div >
+    <!-- ******Header****** -->
+    
+</div><!--//page-wrapper-->
+<footer class="footer col-auto p-2 text-center" style=" background-color: #101010; bottom: 0!important; width: 100%; height: 40px;">
+          
+    <div class=" ">
+     
+     
+       <p style="font-size:small ;color:red">BIOFLEX® <a style="color: rgb(255, 255, 255);">Empaques Flexibles. 2022.12.08, v.2.12.22</a> </p>
+       
+      
+    </div>
+  
+  </footer>
+
+ <p-sidebar [(visible)]="visibleSidebar1" [baseZIndex]="10000">
+    <h1 style="font-weight:normal">BFX-M</h1>
+    <hr>
+    
+    
+
+<p-menu [model]="itemsMenu"></p-menu>
+    
+</p-sidebar> 
+
+
+</body>
+</html>

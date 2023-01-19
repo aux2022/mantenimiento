@@ -1,0 +1,231 @@
+<app-sidebar [isExpanded]="sidebarExpanded" (toggleSidebar)="sidebarExpanded = !sidebarExpanded"></app-sidebar>
+<div class="content" [ngClass]="{ 'sidebarExpanded': sidebarExpanded }">
+    <!-- <router-outlet></router-outlet> -->
+
+    <nav class=" navbar p-d-flex " style="  z-index: 100;">
+        <a class="navbar-brand" href="#"><img
+                src="https://www.bioflex.mx/wp-content/uploads/2020/07/logo_bioflex-01.png" style="height: 30px;"
+                alt=""></a>
+
+
+    </nav>
+    <!-- <p-menubar [model]="items"></p-menubar> -->
+    <!--tablas-->
+
+    <br><br><br>
+
+    <div class="card">
+        <div class="card-container ">
+            <div class="block font-bold  p-4 border-round mb-3">
+                <p-toolbar>
+
+                    <div class="p-toolbar-group-left">
+                        <p-button label="Volver" icon="pi pi-replay" styleClass="p-button-info" pTooltip="Regresar"
+                            routerLink="/listaGeneral"></p-button>
+
+
+
+                    </div>
+                    <div class="p-toolbar-group-left">
+                        <p-button label="Descargar Excel" icon="pi pi-download" styleClass="p-button-info"
+                            pTooltip="Descargar" tooltipPosition="bottom" (click)="exportToExcel()"></p-button>
+
+
+
+                    </div>
+
+
+                </p-toolbar>
+
+                <p-table #dt1 [value]="datatable" dataKey="id" id="dt1" selectionMode="single" [(selection)]="selectedProduct1"
+                    dataKey="code" [rows]="10" [showCurrentPageReport]="false" [scrollable]="true" scrollHeight="400px"
+                    [resizableColumns]="true" styleClass="p-datatable-gridlines" [tableStyle]="{'min-width': '30rem'}"
+                    [rowsPerPageOptions]="[10,5,50,100]" [loading]="loading"
+                    styleClass="p-datatable-customers p-datatable-gridlines " [paginator]="false"
+                    currentPageReportTemplate=""
+                    [globalFilterFields]="['idSolicitud','descripcionProblema','fechaInicio','fechaFinal','tiempoTotal','area']">
+
+
+
+                    <ng-template pTemplate="header">
+                        <tr style="font-size:12px ;" class="">
+
+
+                            <th pResizableColumn pFrozenColumn>
+                                <div class="p-d-flex p-jc-between p-ai-center"> ID <p-columnFilter type="text"
+                                        field="idSolicitud" display="menu"></p-columnFilter></div>
+                            </th>
+                            <th pResizableColumn>
+                                <div class="p-d-flex p-jc-between p-ai-center"> Nombre Solicitante <p-columnFilter
+                                        type="text" field="nombreSolicitante" display="menu"></p-columnFilter></div>
+                            </th>
+                            <th pResizableColumn>
+                                <div class="p-d-flex p-jc-between p-ai-center"> Fecha Solicitud <p-columnFilter
+                                        type="date" field="fechaSolicitud" display="menu"></p-columnFilter></div>
+                            </th>
+                            <th pResizableColumn>
+                                <div class="p-d-flex p-jc-between p-ai-center"> Hora Solicitud <p-columnFilter
+                                        type="text" field="horaSolicitud" display="menu"></p-columnFilter></div>
+                            </th>
+                            <th pResizableColumn>
+                                <div class="p-d-flex p-jc-between p-ai-center"> Área Solicitud <p-columnFilter
+                                        type="text" field="area" display="menu"></p-columnFilter></div>
+                            </th>
+                            <th pResizableColumn>
+                                <div class="p-d-flex p-jc-between p-ai-center"> Máquina <p-columnFilter type="text"
+                                        field="maquina" display="menu"></p-columnFilter></div>
+                            </th>
+                            <th pResizableColumn>
+                                <div class="p-d-flex p-jc-between p-ai-center"> Dispositivo <p-columnFilter type="text"
+                                        field="dispositivo" display="menu"></p-columnFilter></div>
+                            </th>
+
+                            <th pResizableColumn>
+                                <div class="p-d-flex p-jc-between p-ai-center"> Problema <p-columnFilter type="text"
+                                        field="descripcionProblema" display="menu"></p-columnFilter></div>
+                            </th>
+
+                            <th pResizableColumn>
+                                <div class="p-d-flex p-jc-between p-ai-center"> Fecha Inicio <p-columnFilter type="date"
+                                        field="fechaInicio" display="menu"></p-columnFilter></div>
+                            </th>
+                            <th pResizableColumn>
+                                <div class="p-d-flex p-jc-between p-ai-center"> Hora Inicio <p-columnFilter type="text"
+                                        field="horaInicio" display="menu"></p-columnFilter></div>
+                            </th>
+                            <th pResizableColumn>
+                                <div class="p-d-flex p-jc-between p-ai-center"> Diagnóstico <p-columnFilter type="text"
+                                        field="diagnostico" display="menu"></p-columnFilter></div>
+                            </th>
+                            <th pResizableColumn>
+                                <div class="p-d-flex p-jc-between p-ai-center"> Falla <p-columnFilter type="text"
+                                        field="tipoFalla" display="menu"></p-columnFilter></div>
+                            </th>
+                            <th pResizableColumn>
+                                <div class="p-d-flex p-jc-between p-ai-center"> ¿Genero Paro? <p-columnFilter
+                                        type="text" field="generoParo" display="menu"></p-columnFilter></div>
+                            </th>
+                            <th pResizableColumn>
+                                <div class="p-d-flex p-jc-between p-ai-center"> Tiempo Paro Correctivo <p-columnFilter
+                                        type="text" field="paroCorrectivo" display="menu"></p-columnFilter></div>
+                            </th>
+                            <th pResizableColumn>
+                                <div class="p-d-flex p-jc-between p-ai-center"> Tiempo Paro Opertivo <p-columnFilter
+                                        type="text" field="paroOperativo" display="menu"></p-columnFilter></div>
+                            </th>
+                            <th pResizableColumn>
+                                <div class="p-d-flex p-jc-between p-ai-center"> Paro Por Refacción <p-columnFilter
+                                        type="text" field="paroRefaccion" display="menu"></p-columnFilter></div>
+                            </th>
+                            <th pResizableColumn>
+                                <div class="p-d-flex p-jc-between p-ai-center"> Tiempo Total <p-columnFilter type="text"
+                                        field="tiempoTotal" display="menu"></p-columnFilter></div>
+                            </th>
+                            <th pResizableColumn>
+                                <div class="p-d-flex p-jc-between p-ai-center"> Grasas <p-columnFilter type="text"
+                                        field="grasaUtilizada" display="menu"></p-columnFilter></div>
+                            </th>
+                            <th pResizableColumn>
+                                <div class="p-d-flex p-jc-between p-ai-center"> Material Usado <p-columnFilter
+                                        type="text" field="refaMateHerra" display="menu"></p-columnFilter></div>
+                            </th>
+                            <th pResizableColumn>
+                                <div class="p-d-flex p-jc-between p-ai-center"> ¿Trabajó Sanitizado? <p-columnFilter
+                                        type="text" field="trabajoSanitizado" display="menu"></p-columnFilter></div>
+                            </th>
+                            <th pResizableColumn>
+                                <div class="p-d-flex p-jc-between p-ai-center"> Fecha Cierre <p-columnFilter type="date"
+                                        field="estatusActividad" display="menu"></p-columnFilter></div>
+                            </th>
+                            <th pResizableColumn>
+                                <div class="p-d-flex p-jc-between p-ai-center"> Hora Cierre <p-columnFilter type="text"
+                                        field="fechaFinal" display="menu"></p-columnFilter></div>
+                            </th>
+                            <th pResizableColumn>
+                                <div class="p-d-flex p-jc-between p-ai-center"> Nombre Mecánico <p-columnFilter
+                                        type="text" field="horaFinal" display="menu"></p-columnFilter></div>
+                            </th>
+                            <th pResizableColumn>
+                                <div class="p-d-flex p-jc-between p-ai-center"> Nombre Mecánico 2 <p-columnFilter
+                                        type="text" field="nombre" display="menu"></p-columnFilter></div>
+                            </th>
+                            <th pResizableColumn>
+                                <div class="p-d-flex p-jc-between p-ai-center"> Firmada Por... <p-columnFilter
+                                        type="text" field="nombre2" display="menu"></p-columnFilter></div>
+                            </th>
+                            <th pResizableColumn>
+                                <div class="p-d-flex p-jc-between p-ai-center"> Fecha Firma <p-columnFilter type="date"
+                                        field="fechaFirma" display="menu"></p-columnFilter></div>
+                            </th>
+                            <th pResizableColumn>
+                                <div class="p-d-flex p-jc-between p-ai-center"> Hora Firma <p-columnFilter type="text"
+                                        field="horaFirma" display="menu"></p-columnFilter></div>
+                            </th>
+
+
+
+                            <th pResizableColumn>
+                                <div class="p-d-flex p-jc-between p-ai-center">
+                                    Historial Mecánicos
+                                </div>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-datatable>
+                        <tr style="font-size:12px ;" class="" [pSelectableRow]="datatable">
+                            <td class="" pFrozenColumn>{{datatable.idSolicitud}}</td>
+                            <td class="">{{datatable.nombreSolicitante}}</td>
+                            <td class="">{{datatable.fechaSolicitud}}</td>
+                            <td class="">{{datatable.horaSolicitud}}</td>
+                            <td class="">{{datatable.area}}</td>
+                            <td class="">{{datatable.maquina}}</td>
+                            <td class="">{{datatable.dispositivo}}</td>
+                            <td>
+                                <div style='width:11rem; '>{{datatable.descripcionProblema}}</div>
+                            </td>
+
+                            <td class="">{{datatable.fechaInicio}}</td>
+                            <td class="">{{datatable.horaInicio}}</td>
+                            <td>
+                                <div style='width:11rem; '>{{datatable.diagnostico}}</div>
+                            </td>
+                            <td class="">{{datatable.tipoFalla}}</td>
+                            <td class="">{{datatable.generoParo}}</td>
+                            <td class="">{{datatable.paroCorrectivo}}</td>
+                            <td class="">{{datatable.paroOperativo}}</td>
+                            <td class="">{{datatable.paroRefaccion}}</td>
+                            <td class="">{{datatable.tiempoTotal}}</td>
+                            <td>
+                                <div style='width:11rem; '>{{datatable.grasaUtilizada}}</div>
+                            </td>
+                            <td>
+                                <div style='width:11rem; '>{{datatable.refaMateHerra}}</div>
+                            </td>
+                            <td class="">{{datatable.trabajoSanitizado}}</td>
+                            <td class="">{{datatable.estatusActividad}}</td>
+                            <td class="">{{datatable.fechaFinal}}</td>
+                            <td class="">{{datatable.horaFinal}}</td>
+                            <td class="">{{datatable.nombre}}</td>
+                            <td class="">{{datatable.nombre2}}</td>
+                            <td class="">{{datatable.nombre3}}</td>
+                            <td class="">{{datatable.fechaFirma}}</td>
+                            <td class="">{{datatable.horaFirma}}</td>
+
+
+
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="7" class="">No se encontraron registros!!!.<img src="/assets/img/ops.png"
+                                    alt="" style="width:500px ;"></td>
+
+                        </tr>
+                    </ng-template>
+                </p-table>
+
+            </div>
+
+
+
+        </div>

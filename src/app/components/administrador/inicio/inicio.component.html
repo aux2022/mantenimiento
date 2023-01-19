@@ -1,0 +1,85 @@
+<div class="card">
+    <div class="card-container yellow-container">
+
+        <div class="block  font-bold  p-4 border-round mb-3">
+
+            <div class="grid">
+                <div class="col-12 lg:col-6 xl:col-3">
+                    <div class="card mb-0">
+                        <div class="flex justify-content-between mb-3">
+                            <div><span class="block text-500 font-medium mb-3">Ordenes En Proceso</span>
+                                <div class="text-900 font-medium text-xl">{{datatableProceso.length}}</div>
+                            </div>
+                            <div class="flex align-items-center justify-content-center bg-green-100 border-round"
+                                style="width: 2.5rem; height: 2.5rem;">
+                                <i class="pi pi-ellipsis-h text-blue-500 text-xl"></i><!--icono-->
+                            </div>
+                        </div><span class="text-green-500 font-medium">Abiertas </span><span class="text-500">En proceso...</span>
+                    </div>
+                </div>
+            
+                <div class="col-12 lg:col-6 xl:col-3">
+                    <div class="card mb-0">
+                        <div class="flex justify-content-between mb-3">
+                            <div><span class="block text-500 font-medium mb-3">Ordenes Con Trabajo Temporal</span>
+                                <div class="text-900 font-medium text-xl">{{datatableTerminadas.length}}</div>
+                            </div>
+                            <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
+                                style="width: 2.5rem; height: 2.5rem;"><i class="pi pi-clock text-blue-500 text-xl"></i><!--icono-->
+                            </div>
+                        </div><span class="text-blue-500 font-medium">Cerradas TT</span><span class="text-500">Cerradas como trabajo
+                            temporal</span>
+                    </div>
+                </div>
+            
+                <div class="col-12 lg:col-6 xl:col-3">
+                    <div class="card mb-0">
+                        <div class="flex justify-content-between mb-3">
+                            <div><span class="block text-500 font-medium mb-3">Ordenes Canceladas</span>
+                                <div class="text-900 font-medium text-xl">{{datatableCerradas.length-datatableCancel.length}}</div>
+                            </div>
+                            <div class="flex align-items-center justify-content-center bg-red-100 border-round"
+                                style="width: 2.5rem; height: 2.5rem;">
+                                <i class="pi pi-times text-red-500 text-xl"></i><!--icono-->
+                            </div>
+                        </div><span class="text-red-500 font-medium">Canceladas </span><span class="text-500">Canceladas</span>
+                    </div>
+                </div>
+                <div class="col-12 lg:col-6 xl:col-3">
+                    <div class="card mb-0">
+                        <div class="flex justify-content-between mb-3">
+                            <div><span class="block text-500 font-medium mb-3">Ordenes Terminadas</span>
+                                <div class="text-900 font-medium text-xl">{{datatableCancel.length}}</div>
+                            </div>
+                            <div class="flex align-items-center justify-content-center bg-green-100 border-round"
+                                style="width: 2.5rem; height: 2.5rem;"><i
+                                    class="pi pi-check-circle text-green-500 text-xl"><!--icon-->
+            
+            
+                                </i>
+                            </div>
+                        </div><span class="text-green-500 font-medium">Terminadas </span><span class="text-500">Terminadas
+                            satisfactoriamente</span>
+                    </div>
+                </div>
+
+
+        </div>
+
+        <div class="block  font-bold  p-4 border-round mb-3">
+
+            <div class="card">
+               
+                <h5>Avance</h5>
+                <p-progressBar [value]="(((datatableCerradas.length+datatableTerminadas.length)*100)/datatable.length).toFixed(2)"></p-progressBar>
+            
+               
+            
+            </div>
+        
+
+        </div>
+
+        
+    </div>
+</div>

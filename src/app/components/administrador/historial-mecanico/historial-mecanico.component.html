@@ -1,0 +1,64 @@
+<app-sidebar [isExpanded]="sidebarExpanded" (toggleSidebar)="sidebarExpanded = !sidebarExpanded"></app-sidebar>
+<div class="content" [ngClass]="{ 'sidebarExpanded': sidebarExpanded }">
+    <!-- <router-outlet></router-outlet> -->
+    
+    <nav class=" navbar p-d-flex " style="  z-index: 100;" >
+        <a class="navbar-brand" href="#"  ><img src="https://www.bioflex.mx/wp-content/uploads/2020/07/logo_bioflex-01.png" style="height: 30px;" alt=""></a>
+      
+    
+    </nav>  
+    <!-- <p-menubar [model]="items"></p-menubar> -->
+<!--tablas-->
+
+<br><br><br>
+
+<div class="card">
+    <div class="card-container ">
+        <div class="block font-bold text-center p-4 border-round mb-3">
+
+            
+                <div class="flex md:justify-content-start justify-content-center flex-wrap card-container ">
+                    <div class="flex align-items-center justify-content-center w-4rem h-4rem  font-bold text-white border-round m-2">
+                        <p-button label="Volver" icon="pi pi-replay" styleClass="p-button-sm" routerLink="/listaGeneral"></p-button>
+                    </div>
+                   
+                        <h6  class="flex align-items-center justify-content-center w-8rem h-4rem  font-bold border-round m-2">Solicitud: <b style="color:red">{{idSolicitudm}}</b> </h6>
+                   
+                </div>
+      
+
+
+
+           
+            
+<p-table [value]="datatable" [paginator]="true" [rows]="5" [responsive]="true">
+    
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="name">Historial de cambios <p-sortIcon field="vin"></p-sortIcon></th>
+            <th pSortableColumn="price">Fecha de cambio <p-sortIcon field="price"></p-sortIcon></th>
+            <th pSortableColumn="inventoryStatus">Hora de cambio <p-sortIcon field="inventoryStatus"></p-sortIcon></th>
+            <th style="width:4em"></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-datatable>
+        <tr>
+            <td>{{datatable.historialMecanico}}</td>
+            <td>{{datatable.fechaHistorial}}</td>
+            <td>{{datatable.horaHistorial}}</td>
+            
+            <td>
+               
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+        </div>
+        
+    </div>
+</div>
+
+
+
+
