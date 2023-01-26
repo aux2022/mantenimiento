@@ -26,10 +26,21 @@ export class ListaGeneralComponent implements OnInit {
   serviceModel: ServiceModel = new ServiceModel()
   constructor(private config: PrimeNGConfig,private dBConectionService: DBConectionService,public route: ActivatedRoute,public dialogService: DialogService) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.dBConectionService.getSolicitud().subscribe(res => {
       this.datatable = res;
       this.loading = false;
+      this.datatable.forEach((res: { fechaSolicitud: any; fechaInicio:any; fechaFinal:any; fechaFirma:any}) =>
+      (
+     res.fechaSolicitud = new Date(res.fechaSolicitud),
+      res.fechaInicio = new Date(res.fechaInicio),
+      res.fechaFinal=new Date(res.fechaFinal),
+      res.fechaFirma= new Date(res.fechaFirma)
+      )
+
+
+
+      );
   });
   this.HistorialMecani();
   this.config.setTranslation({
@@ -59,11 +70,11 @@ export class ListaGeneralComponent implements OnInit {
 
         if (id) {
           this.dBConectionService.getSolicitudSMToma(id)
-          
+
             .subscribe({
               next: response => {
                 this.datatableHist = response;
-              
+
           this.idSolicitudm=id;
 
               }

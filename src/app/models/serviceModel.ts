@@ -74,4 +74,8 @@ export class ServiceModel {
 
     comentariosSolicitante:String=''//nuevo
 
+    totalMinutos:number=0
+
+
+
 }

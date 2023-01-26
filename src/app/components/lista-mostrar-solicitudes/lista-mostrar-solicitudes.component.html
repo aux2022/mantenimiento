@@ -20,20 +20,37 @@
 
 <p-breadcrumb [model]="items"   ></p-breadcrumb>
 <div class="p-grid">
+ <!--menu items-->
+ <p-toolbar>
 
-	<p-table #dt1  [value]="datatable" dataKey="id" selectionMode="single"   [(selection)]="selectedProduct1" dataKey="code"  [rows]="10" [showCurrentPageReport]="true" [scrollable]="true" scrollHeight="400px" [resizableColumns]="true" styleClass="p-datatable-gridlines"  [tableStyle]="{'min-width': '30rem'}"
+  <div class="p-toolbar-group-left">
+    <input type="search" id="form1" class="form-control" placeholder="Buscar en tabla" aria-label="Search"  (input)="dt1.filterGlobal(
+      $any($event.target).value, 'contains')"/>
+
+  </div>
+  <div class="p-toolbar-group-left">
+      <p-button label="Descargar Excel" icon="pi pi-download" styleClass="p-button-info"
+          pTooltip="Descargar" tooltipPosition="bottom" (click)="exportToExcel()"></p-button>
+
+
+
+  </div>
+
+
+</p-toolbar>
+<!--menu items-->
+	<p-table #dt1  [value]="datatable" dataKey="id" id="dt1" selectionMode="single"   [(selection)]="selectedProduct1" dataKey="code"  [rows]="10" [showCurrentPageReport]="true" [scrollable]="true" scrollHeight="400px" [resizableColumns]="true" styleClass="p-datatable-gridlines"  [tableStyle]="{'min-width': '30rem'}"
 				[rowsPerPageOptions]="[10,5,50,100]" [loading]="loading" styleClass="p-datatable-customers p-datatable-gridlines "
-				[paginator]="true" currentPageReportTemplate=""
+				[paginator]="false" currentPageReportTemplate=""
 				[globalFilterFields]="['idSolicitud','nombre','nombre2','estatusActividad']">
 
-				 <ng-template pTemplate="caption">
-					<div class="p-d-flex">
-						<span class="p-input-icon-left p-ml-auto">
-							<i class="pi pi-search"></i>
-							<input pInputText type="text"   (input)="dt1.filterGlobal($event.target, 'contains')" placeholder="Buscar en tabla.." />
-						</span>
-					</div>
-				</ng-template>
+
+
+
+
+
+
+
 
 				<ng-template pTemplate="header">
 					<tr  style="font-size:12px ;" class="text-center">
@@ -44,7 +61,7 @@
 							</div>
 						</th>
 
-            <th pResizableColumn pFrozenColumn>
+            <th pResizableColumn >
 							<div class="p-d-flex p-jc-between p-ai-center">
 								Àrea
 
@@ -61,7 +78,12 @@
 								<!-- <p-columnFilter type="text" field="area" display="menu"></p-columnFilter> -->
 							</div>
 						</th>
-
+            <th pResizableColumn>
+							<div class="p-d-flex p-jc-between p-ai-center">
+								Fecha solicitud
+								<p-columnFilter type="date" field="fechaSolicitud" display="menu"></p-columnFilter>
+							</div>
+						</th>
 						<th pResizableColumn>
 							<div class="p-d-flex p-jc-between p-ai-center">
 								Mecanico 1
@@ -94,7 +116,13 @@
 
 						<th pResizableColumn>
 							<div class="p-d-flex p-jc-between p-ai-center">
-								Tiempo total
+								Tiempo Reportado
+							</div>
+						</th>
+
+            <th pResizableColumn>
+							<div class="p-d-flex p-jc-between p-ai-center">
+								Tiempo Real
 							</div>
 						</th>
 
@@ -143,21 +171,66 @@
               <td  class="">
 								{{datatable.area}}
 							</td>
+
+
+
+              <td  class="text-center">
+								{{datatable.fechaSolicitud  | date: 'MM/dd/yyyy' }}
+							</td>
+
+
+
+
 							<td  class="">
 								{{datatable.nombre}}
 							</td>
 							<td  class="">
 								{{datatable.nombre2}}
 							</td>
-							<td  class="text-center">
-								{{datatable.fechaInicio}}
+
+
+             <!--
+            	<td  class="text-center">
+								{{datatable.fechaInicio | date: 'MM/dd/yyyy'}}
 							</td>
 							<td  class="text-center">
-								{{datatable.fechaFinal }}
+								{{datatable.fechaFinal  | date: 'MM/dd/yyyy' }}
 							</td>
+
+
+            -->
+					              <!-- condicional  -->
+                        <td  class="text-center" *ngIf="(datatable.fechaInicio | date: 'MM/dd/yyyy')=='01/01/1900'">
+                          En proceso
+                        </td>
+
+                        <td  class="text-center" *ngIf="(datatable.fechaInicio | date: 'MM/dd/yyyy')!='01/01/1900'">
+                          {{datatable.fechaInicio | date: 'MM/dd/yyyy'}}
+                        </td>
+
+
+                        <td  class="text-center" *ngIf="(datatable.fechaFinal | date: 'MM/dd/yyyy')=='01/01/1900'">
+                          En proceso
+                        </td>
+                        <td  class="text-center" *ngIf="(datatable.fechaFinal | date: 'MM/dd/yyyy')!='01/01/1900'">
+                          {{datatable.fechaFinal | date: 'MM/dd/yyyy'}}
+                        </td>
+
+            <!-- condicional  -->
+
+
 							<td  class="text-center">
 								{{datatable.tiempoTotal}}
 							</td>
+
+              <td  class="text-center" *ngIf="datatable.totalMinutos<=0">
+								En proceso
+							</td>
+              <td  class="text-center" *ngIf="datatable.totalMinutos>=0">
+								{{datatable.totalMinutos}}
+							</td>
+
+
 
 								<div *ngIf="datatable.estatusActividad ==='Terminado'; then thenBlock else elseBlock"></div>
 								<ng-template #thenBlock>

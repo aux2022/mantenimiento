@@ -22,7 +22,7 @@ export class DBConectionService {
 
    }
 
-   //regresar todos los usuarios
+   //regresar todos los usuarios Abc1234*    A
    getUsuarios(){
     return this.http.get(this.urlServices+'usuarios');
 

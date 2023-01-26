@@ -135,7 +135,7 @@
                             </th>
                             <th pResizableColumn>
                                 <div class="p-d-flex p-jc-between p-ai-center"> Fecha Cierre <p-columnFilter type="date"
-                                        field="estatusActividad" display="menu"></p-columnFilter></div>
+                                        field="fechaFinal" display="menu"></p-columnFilter></div>
                             </th>
                             <th pResizableColumn>
                                 <div class="p-d-flex p-jc-between p-ai-center"> Hora Cierre <p-columnFilter type="text"
@@ -175,7 +175,7 @@
                         <tr style="font-size:12px ;" class="" [pSelectableRow]="datatable">
                             <td class="" pFrozenColumn>{{datatable.idSolicitud}}</td>
                             <td class="">{{datatable.nombreSolicitante}}</td>
-                            <td class="">{{datatable.fechaSolicitud}}</td>
+                            <td class="">{{datatable.fechaSolicitud | date: 'MM/dd/yyyy'}}</td>
                             <td class="">{{datatable.horaSolicitud}}</td>
                             <td class="">{{datatable.area}}</td>
                             <td class="">{{datatable.maquina}}</td>
@@ -184,7 +184,7 @@
                                 <div style='width:11rem; '>{{datatable.descripcionProblema}}</div>
                             </td>
 
-                            <td class="">{{datatable.fechaInicio}}</td>
+                            <td class="">{{datatable.fechaInicio | date: 'MM/dd/yyyy'}}</td>
                             <td class="">{{datatable.horaInicio}}</td>
                             <td>
                                 <div style='width:11rem; '>{{datatable.diagnostico}}</div>
@@ -203,12 +203,12 @@
                             </td>
                             <td class="">{{datatable.trabajoSanitizado}}</td>
                             <td class="">{{datatable.estatusActividad}}</td>
-                            <td class="">{{datatable.fechaFinal}}</td>
+                            <td class="">{{datatable.fechaFinal | date: 'MM/dd/yyyy'}}</td>
                             <td class="">{{datatable.horaFinal}}</td>
                             <td class="">{{datatable.nombre}}</td>
                             <td class="">{{datatable.nombre2}}</td>
                             <td class="">{{datatable.nombre3}}</td>
-                            <td class="">{{datatable.fechaFirma}}</td>
+                            <td class="">{{datatable.fechaFirma | date: 'MM/dd/yyyy'}}</td>
                             <td class="">{{datatable.horaFirma}}</td>
 
 

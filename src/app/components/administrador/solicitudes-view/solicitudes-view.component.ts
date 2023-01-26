@@ -36,28 +36,50 @@ export class SolicitudesViewComponent implements OnInit {
       { icon: 'pi pi-home', url: '/#' },
       { label: 'Vista de Solicitudes' },
     ];
-
     this.config.setTranslation({
       accept: 'Accept',
       reject: 'Cancel',
-      apply: 'Aplicar',
-      clear: 'Limpiar',
-      addRule: 'Agregar regla',
-      matchAll: 'Coincidir con todos',
-      matchAny: 'Coincidir con ninguno',
-      startsWith: 'Inicia con',
-      contains: 'Contiene',
-      notContains: 'No contiene',
-      endsWith: 'Termina con',
-      equals: 'Es igual',
-      notEquals: 'No es igual',
+      apply:'Aplicar',
+      clear:'Limpiar',
+      addRule:'Agregar regla',
+      matchAll:'Coincidir con todos',
+      matchAny:'Coincidir con ninguno',
+      startsWith:'Inicia con',
+      contains:'Contiene',
+      notContains:'No contiene',
+      endsWith:'Termina con',
+      equals:'Es igual',
+      notEquals:'No es igual',
+
+      //calendar
+      dateIs: 'La fecha es..',
+      dateIsNot:'La fecha es diferente..',
+      dateBefore:'Anterior a..',
+      dateAfter:'Superior a..',
+monthNames:['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+dayNamesShort:['Lu','Ma','Mi','Ju','Vi','Sa','Do'],
+dayNames:['Lu','Ma','Mi','Ju','Vi','Sa','Do'],
+monthNamesShort:['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sept','Oct','Nov','Dic'],
+dayNamesMin:['Lu','Ma','Mi','Ju','Vi','Sa','Do'],
+
 
       //translations
-    });
+  });
 
     this.dBConectionService.getSolicitud().subscribe(res => {
       this.datatable = res;
       this.loading = false;
+      this.datatable.forEach((res: { fechaSolicitud: any; fechaInicio:any; fechaFinal:any; fechaFirma:any}) =>
+      (
+     res.fechaSolicitud = new Date(res.fechaSolicitud),
+      res.fechaInicio = new Date(res.fechaInicio),
+      res.fechaFinal=new Date(res.fechaFinal),
+      res.fechaFirma= new Date(res.fechaFirma)
+      )
+
+
+
+      );
     });
     this.frozenCols = [
       { field: 'id', header: 'ID' }
